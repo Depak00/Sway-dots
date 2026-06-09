@@ -1,0 +1,117 @@
+{
+    "height": 30,
+    "spacing": 0,
+
+    "modules-left": [
+        "sway/workspaces",
+        "sway/mode",
+        "sway/scratchpad"
+    ],
+
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "backlight",
+        "pulseaudio",
+        "network",
+        "custom/bluetooth",
+        "sway/language",
+        "battery",
+        "tray",
+        "custom/power"
+    ],
+
+    "sway/language": {
+        "on-click": "swaymsg input type:keyboard xkb_switch_layout next",
+        "tooltip": false
+    },
+
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+
+    "sway/scratchpad": {
+        "format": "{icon} {count}",
+        "show-empty": false,
+        "format-icons": ["", ""],
+        "tooltip": true,
+        "tooltip-format": "{app}: {title}"
+    },
+
+    "tray": {
+        // "icon-size": 21,
+        "spacing": 10,
+        "icons": {
+           "blueman": "bluetooth",
+        }
+    },
+
+    "clock": {
+        "format-alt": "{:%Y-%m-%d}",
+        "tooltip": false
+    },
+
+    "backlight": {
+        "format": "{percent}% {icon}",
+        "format-icons": [""],        
+        "tooltip": false
+    },
+
+    "battery": {
+        "states": {
+            // "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-full": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", ""]
+    },
+
+    "network": {
+        // "interface": "wlp2*", // (Optional) To force the use of this interface
+        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-ethernet": "{ipaddr}/{cidr} ",
+        "tooltip-format": "{ifname} via {gwaddr} ",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": "Disconnected ⚠",
+        "on-click": "nmrs"
+    },
+
+    "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "{volume}% {icon} {format_source}",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol",
+        "tooltip": false
+    },
+
+    "custom/bluetooth": {
+        "format": "",
+        "on-click": "blueberry",
+        "tooltip": false
+    },
+
+    "custom/power": {
+        "format": "⏻",    
+        "on-click": "~/.config/waybar/power_menu.sh",
+        "tooltip": false
+    }
+}

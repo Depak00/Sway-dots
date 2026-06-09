@@ -1,0 +1,28 @@
+window {
+    background-color: #000000;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 13px;
+}
+
+#input {
+    background-color: transparent;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    margin: 10px;
+    padding: 5px;
+}
+
+#entry {
+    padding: 6px 12px;
+    color: #ffffff;
+}
+
+#entry:selected {
+    background-color: #ffffff;
+}
+
+#text:selected {
+    color: #000000;
+}
