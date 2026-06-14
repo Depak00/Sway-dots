@@ -62,7 +62,7 @@ floating_modifier $mod normal
 bindsym --to-code $mod+Shift+c reload
 
 # Exit sway
-bindsym --to-code $mod+Shift+x exec swaymsg exit
+bindsym $mod+Shift+x exec swaymsg exit
 
 # Focus windows
 bindsym $mod+Left focus left
@@ -203,16 +203,16 @@ bar {
 }
 
 
+
 ### Assigning to workspaces
 
 assign [class="AmneziaVPN"] workspace number 10
 assign [app_id=".*qbittorrent.*"] workspace number 10
-for_window [class="steam"] move to workspace 6
+for_window [class="^Steam$"] move to workspace 6
 for_window [instance="steamwebhelper"] move to workspace 6
 # for_window [title=".*Steam.*"] move to workspace 6
-# for_window [class="SteamUpdate"] move to workspace 6
-# for_window [window_role="update"] move to workspace 6
+for_window [class="SteamUpdate"] move to workspace 6
+for_window [window_role="update"] move to workspace 6
 
 
-exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY GDK_BACKEND
 include ~/.config/sway/*.conf
