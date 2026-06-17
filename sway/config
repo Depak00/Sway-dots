@@ -152,6 +152,8 @@ bindsym $mod+F3 exec brightnessctl set 5%+
 # Special key to take a screenshot with grim
 bindsym --to-code Print exec grim
 
+# Swaylock
+bindsym --to-code $mod+l exec swaylock --color 000000 --ring-color ffffff --key-hl-color 000000 --ring-ver-color ffffff --inside-ver-color 000000 --inside-wrong-color 000000 --ring-wrong-color ff0000
 
 
 ### Autostart
@@ -171,13 +173,6 @@ exec_always autotiling -l 2
 # Display
 exec_always kanshi
 
-# Sleep
-#exec_always swayidle -w \
-#    timeout 300 'foot --fullscreen sh -c "pipes.sh; exec swaymsg fullscreen"' \
-#    resume 'pkill -f "pipes.sh"' \
-#    before-sleep 'pkill -f "pipes.sh"'
-#seat seat0 hide_cursor 300000
-
 
 
 ### Decorations
@@ -195,7 +190,7 @@ hide_edge_borders smart
 client.focused #ffffff #ffffff #ffffff #ffffff
 
 # wallpaper
-exec_always swaybg -i ~/.config/sway/wp1.png
+exec_always swaybg -i ~/.config/sway/wp.png
 
 # Status Bar
 bar {
