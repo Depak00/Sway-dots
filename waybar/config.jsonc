@@ -15,7 +15,7 @@
         "backlight",
         "pulseaudio",
         "network",
-        "custom/bluetooth",
+        "bluetooth",
         "sway/language",
         "battery",
         "tray",
@@ -48,7 +48,7 @@
     },
 
     "clock": {
-        "format-alt": "{:%Y-%m-%d}",
+        "format-alt": "{:%d-%m-%Y}",
         "tooltip": false
     },
 
@@ -73,7 +73,6 @@
     },
 
     "network": {
-        // "interface": "wlp2*", // (Optional) To force the use of this interface
         "format-wifi": "{essid} ({signalStrength}%) ",
         "format-ethernet": "{ipaddr}/{cidr} ",
         "tooltip-format": "{ifname} via {gwaddr} ",
@@ -102,10 +101,15 @@
         "tooltip": false
     },
 
-    "custom/bluetooth": {
-        "format": "",
-        "on-click": "blueberry",
-        "tooltip": false
+    "bluetooth": {
+        "format": "{icon}",
+        "format-disabled": "",
+        "format-icons": {
+            "off": "󰂲",
+            "on": "󰂯",
+            "connected": ""
+        },
+        "on-click": "blueberry"
     },
 
     "custom/power": {

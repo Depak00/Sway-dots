@@ -35,6 +35,8 @@ input type:keyboard {
 
 ### Key bindings
 
+floating_modifier $mod normal
+
 # Start a terminal
 bindsym $mod+Return exec $term
 
@@ -55,8 +57,6 @@ bindsym $mod+F1 exec $browser
 
 # File-manager
 bindsym --to-code $mod+e exec $files
-
-floating_modifier $mod normal
 
 # Reload the configuration file
 bindsym --to-code $mod+Shift+c reload
@@ -158,20 +158,17 @@ bindsym --to-code $mod+l exec swaylock --color 000000 --ring-color ffffff --key-
 
 ### Autostart
 
+# Display
+exec kanshi
+
 # Polkit
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-
-# Mouse focus
-focus_follows_mouse no
 
 # Copy/paste
 exec wl-clip-persist --clipboard regular
 
 # Autotiling
-exec_always autotiling -l 2
-
-# Display
-exec_always kanshi
+exec autotiling -l 2
 
 
 
@@ -190,7 +187,10 @@ hide_edge_borders smart
 client.focused #ffffff #ffffff #ffffff #ffffff
 
 # wallpaper
-exec_always swaybg -i ~/.config/sway/wp.png
+output * bg ~/.config/sway/wp.png fill
+
+# Mouse focus
+focus_follows_mouse no
 
 # Status Bar
 bar {
@@ -203,11 +203,7 @@ bar {
 
 assign [class="AmneziaVPN"] workspace number 10
 assign [app_id=".*qbittorrent.*"] workspace number 10
-for_window [class="^Steam$"] move to workspace 6
-for_window [instance="steamwebhelper"] move to workspace 6
-# for_window [title=".*Steam.*"] move to workspace 6
-for_window [class="SteamUpdate"] move to workspace 6
-for_window [window_role="update"] move to workspace 6
+for_window [title="Steam" shell="xwayland"] move to workspace 6
 
-
+exec systemctl --user import-environment WAYLAND_DISPLAY
 include ~/.config/sway/*.conf

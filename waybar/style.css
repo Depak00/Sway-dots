@@ -4,7 +4,7 @@
 }
 
 #battery, #pulseaudio, #language, #network, #tray, #clock,
-#backlight, #scratchpad, #custom-bluetooth, #custom-power, #mode {
+#backlight, #scratchpad, #bluetooth, #custom-power, #mode {
     padding: 0 10px;
     margin: 0 5px;
     background-color: transparent;
