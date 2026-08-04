@@ -4,16 +4,17 @@
 set $mod Mod4
 
 # Terminal
-set $term alacritty
+set $term kitty
 
-# Your preferred application launcher
+# Menu
 set $menu wofi -a --show=drun
+set $menu_kill wofi
 
 # Browser
 set $browser firefox
 
 # File manager
-set $files nemo
+set $files thunar
 
 
 
@@ -50,7 +51,7 @@ bindsym --to-code $mod+a exec AmneziaVPN
 bindsym --to-code $mod+g exec steam
 
 # Start your launcher
-bindsym --to-code $mod+d exec "killall wofi; $menu"
+bindsym --to-code $mod+d exec "killall $menu_kill; $menu"
 
 # Browser
 bindsym $mod+F1 exec $browser
@@ -102,6 +103,14 @@ bindsym $mod+Shift+8 move container to workspace number 8
 bindsym $mod+Shift+9 move container to workspace number 9
 bindsym $mod+Shift+0 move container to workspace number 10
 
+# Moving to next/previous workspace
+bindsym $mod+Alt+Right workspace next
+bindsym $mod+Alt+Left workspace prev
+
+# Moving to first/last workspace
+bindsym $mod+Alt+Down exec swaymsg workspace $(swaymsg -t get_workspaces -r | grep -oE '"name"\s*:\s*"[0-9]+"' | grep -oE '[0-9]+' | sort -n | head -1)
+bindsym $mod+Alt+Up exec swaymsg workspace $(swaymsg -t get_workspaces -r | grep -oE '"name"\s*:\s*"[0-9]+"' | grep -oE '[0-9]+' | sort -n | tail -1)
+
 # Horizontal and vertical split
 bindsym --to-code $mod+h splith
 bindsym --to-code $mod+v splitv
@@ -128,29 +137,29 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
 # Resizing containers
-bindsym $mod+r mode "resize"
-mode "resize" {
-    bindsym Left resize shrink width 10px
-    bindsym Down resize grow height 10px
-    bindsym Up resize shrink height 10px
-    bindsym Right resize grow width 10px
+bindsym $mod+Ctrl+Left resize shrink width 10px
+bindsym $mod+Ctrl+Down resize grow height 10px
+bindsym $mod+Ctrl+Up resize shrink height 10px
+bindsym $mod+Ctrl+Right resize grow width 10px
 
-    # Return to default mode
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
+# Brightness
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym XF86MonBrightnessUp exec brightnessctl set 5%+
 
-# Special keys to adjust volume via PulseAudio
-bindsym $mod+F6 exec pactl set-sink-mute \@DEFAULT_SINK@ toggle
-bindsym $mod+F7 exec pactl set-sink-volume \@DEFAULT_SINK@ -5%
-bindsym $mod+F8 exec pactl set-sink-volume \@DEFAULT_SINK@ +5%
+# Volume
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 
-# Special keys to adjust brightness via brightnessctl
-bindsym $mod+F2 exec brightnessctl set 5%-
-bindsym $mod+F3 exec brightnessctl set 5%+
 
-# Special key to take a screenshot with grim
-bindsym --to-code Print exec grim
+# Fullscreen screenshot
+bindsym Print exec grim ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png
+
+# Copy part of the screen
+bindsym Shift+Print exec grim -g "$(slurp)" - | wl-copy
+
+# Save part of screen
+bindsym Ctrl+Print exec grim -g "$(slurp)" ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png
 
 # Swaylock
 bindsym --to-code $mod+l exec swaylock --color 000000 --ring-color ffffff --key-hl-color 000000 --ring-ver-color ffffff --inside-ver-color 000000 --inside-wrong-color 000000 --ring-wrong-color ff0000
@@ -160,6 +169,9 @@ bindsym --to-code $mod+l exec swaylock --color 000000 --ring-color ffffff --key-
 
 # Display
 exec kanshi
+
+# Notifications
+exec mako
 
 # Polkit
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
@@ -202,7 +214,8 @@ bar {
 ### Assigning to workspaces
 
 assign [class="AmneziaVPN"] workspace number 10
-assign [app_id=".*qbittorrent.*"] workspace number 10
+assign [app_id="Happ"] workspace number 10
+assign [app_id="qbittorrent"] workspace number 9
 for_window [title="Steam" shell="xwayland"] move to workspace 6
 
 exec systemctl --user import-environment WAYLAND_DISPLAY
