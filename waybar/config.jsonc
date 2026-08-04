@@ -40,10 +40,7 @@
     },
 
     "tray": {
-        "spacing": 10,
-        "icons": {
-           "blueman": "bluetooth"
-        }
+        "spacing": 10
     },
 
     "clock": {
