@@ -50,7 +50,7 @@
 
     "backlight": {
         "format": "{percent}% {icon}",
-        "format-icons": [""],        
+        "format-icons": ["", "", "", "", "", "", "", "", ""],
         "tooltip": false,
         "on-scroll-up": "brightnessctl set 5%+",
         "on-scroll-down": "brightnessctl set 5%-"
@@ -79,12 +79,10 @@
     },
 
     "pulseaudio": {
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-bluetooth-muted": " {icon}",
+        "format-muted": "",
         "format-icons": {
             "headphone": "",
             "hands-free": "",
@@ -96,18 +94,17 @@
         },
         "on-click": "pavucontrol",
         "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
-        "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%",
-        "tooltip": false
+        "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
     },
 
     "bluetooth": {
         "format": "{icon}",
-        "format-disabled": "",
+        "format-disabled": "󰂲",
         "format-icons": {
-            "off": "󰂲",
             "on": "󰂯",
             "connected": ""
         },
+        "tooltip": false,
         "on-click": "blueberry"
     },
 
