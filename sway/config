@@ -7,11 +7,12 @@ set $mod Mod4
 set $term kitty
 
 # Menu
-set $menu wofi -a --show=drun
-set $menu_kill wofi
+set $menu fuzzel -I
+set $menu_kill fuzzel
 
 # Browser
 set $browser firefox
+set $private --private-window
 
 # File managers
 set $files nemo
@@ -41,8 +42,9 @@ floating_modifier $mod normal
 
 # Start a terminal
 bindsym $mod+Return exec $term
-bindsym $mod+Shift+Return exec $term --class floating_terminal
-for_window [app_id="floating_terminal"] floating enable
+bindsym $mod+Shift+Return exec $term --class floating_term
+bindsym $mod+Ctrl+Return exec bash ~/.config/sway/slterm.sh
+
 
 # Kill focused window
 bindsym --to-code $mod+q kill
@@ -52,13 +54,14 @@ bindsym --to-code $mod+a exec AmneziaVPN
 
 # Steam
 bindsym --to-code $mod+g exec steam
+bindsym --to-code $mod+shift+g exec ~/.local/bin/games
 
 # Start your launcher
-bindsym --to-code $mod+d exec "killall $menu_kill; $menu"
+bindsym --to-code $mod+d exec "killall $menu_kill; exec $menu"
 
 # Browser
 bindsym --to-code $mod+w exec $browser
-bindsym --to-code $mod+shift+w exec $browser --private-window
+bindsym --to-code $mod+shift+w exec $browser $private
 
 # File managers
 bindsym --to-code $mod+e exec $files
@@ -134,9 +137,6 @@ bindsym $mod+shift+space floating toggle; resize set 800 600
 # Toggle focus between modes
 bindsym $mod+space focus mode_toggle
 
-# Parent container
-bindsym --to-code $mod+p focus parent
-
 # Scratchpad
 bindsym $mod+shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
@@ -165,8 +165,15 @@ bindsym shift+Print exec grim -g "$(slurp)" - | wl-copy
 # Save part of screen
 bindsym Ctrl+Print exec grim -g "$(slurp)" ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png
 
+# Screenshot active window
+bindsym alt+Print exec swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | grim -g - ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png
+
 # Swaylock
 bindsym --to-code $mod+l exec swaylock --color 000000 --ring-color ffffff --key-hl-color 000000 --ring-ver-color ffffff --inside-ver-color 000000 --inside-wrong-color 000000 --ring-wrong-color ff0000
+
+# Clipboard manager
+bindsym --to-code $mod+v exec cliphist list | fuzzel -d -i --minimal-lines | cliphist decode | wl-copy
+bindsym --to-code $mod+Shift+v exec cliphist wipe
 
 
 ### Autostart
@@ -185,6 +192,10 @@ exec wl-clip-persist --clipboard regular
 
 # Autotiling
 exec autotiling -l 2
+
+# Cliphist
+exec cliphist wipe
+exec wl-paste --watch cliphist -max-items 10 store
 
 
 
@@ -211,8 +222,8 @@ focus_follows_mouse no
 
 # Floating rules
 #floating_minimum_size 900 x 600
-#floating_maximum_size 900 x 600
-for_window [floating] resize set 800 600
+# floating_maximum_size 1800 x 1008
+for_window [floating app_id="^(?!slterm$).*"] resize set 800 600
 
 # Status Bar
 bar {
@@ -221,13 +232,16 @@ bar {
 
 
 
-### Assigning to workspaces
+### Window rules
 
-assign [class="AmneziaVPN"] workspace number 10
-assign [app_id="Happ"] workspace number 10
+assign [app_id="AmneziaVPN"] workspace number 10
 assign [app_id="qbittorrent"] workspace number 9
 for_window [title="Steam" shell="xwayland"] move to workspace 6
 for_window [class="steam"] move to workspace 6
+for_window [app_id="floating_term"] floating enable
+for_window [app_id="slterm"] floating enable
+for_window [app_id="slterm"] move position 0 -10000
 
-exec systemctl --user import-environment WAYLAND_DISPLAY
+
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 include ~/.config/sway/*.conf

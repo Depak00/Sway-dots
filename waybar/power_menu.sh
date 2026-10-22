@@ -1,8 +1,8 @@
 #!/bin/bash
-pkill wofi
-CHOICE=$(echo -e "Exit Sway\nShutdown\nReboot" | wofi --dmenu --lines 3 --width 80 --hide-search --location top_right --yoffset 5)
+CHOICE=$(echo -e "󰐥 Shutdown\n󰜉 Reboot\n󰍃 Exit" | fuzzel -d --hide-prompt -a top-right -l 3 -w 10 --font='iosevka:size=7' --x-margin 5 --y-margin 5)
+killall fuzzel
 case $CHOICE in
-    "Exit Sway") swaymsg exit ;;
-    "Shutdown") shutdown now ;;
-    "Reboot") reboot ;;
+    "󰍃 Exit") swaymsg exit ;;
+    "󰐥 Shutdown") shutdown now ;;
+    "󰜉 Reboot") reboot ;;
 esac
