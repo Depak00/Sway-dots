@@ -57,7 +57,7 @@ bindsym --to-code $mod+g exec steam
 bindsym --to-code $mod+shift+g exec ~/.local/bin/games
 
 # Start your launcher
-bindsym --to-code $mod+d exec "killall $menu_kill; exec $menu"
+bindsym --to-code $mod+d exec "killall -q $menu_kill; exec $menu"
 
 # Browser
 bindsym --to-code $mod+w exec $browser
@@ -72,7 +72,7 @@ bindsym --to-code $mod+shift+e exec kitty -e $tfiles
 bindsym --to-code $mod+shift+c reload
 
 # Exit sway
-bindsym $mod+shift+x exec swaymsg exit
+bindsym --to-code $mod+shift+x exec swaymsg exit
 
 # Focus windows
 bindsym $mod+Left focus left
@@ -121,13 +121,12 @@ bindsym $mod+alt+shift+Right move container to workspace next
 bindsym $mod+alt+shift+Left move container to workspace prev
 
 # Moving to first/last workspace
-bindsym $mod+alt+Down exec swaymsg workspace $(swaymsg -t get_workspaces -r | grep -oE '"name"\s*:\s*"[0-9]+"' | grep -oE '[0-9]+' | sort -n | head -1)
-bindsym $mod+alt+Up exec swaymsg workspace $(swaymsg -t get_workspaces -r | grep -oE '"name"\s*:\s*"[0-9]+"' | grep -oE '[0-9]+' | sort -n | tail -1)
+bindsym $mod+alt+Down exec swaymsg workspace $(swaymsg -t get_workspaces -r | jq -r '.[].num' | sort -n | head -1)
+bindsym $mod+alt+Up exec swaymsg workspace $(swaymsg -t get_workspaces -r | jq -r '.[].num' | sort -n | tail -1)
 
 # Move focused container to first/last workspace
-bindsym $mod+alt+shift+Down exec swaymsg move container to workspace $(swaymsg -t get_workspaces -r | grep -oE '"name"\s*:\s*"[0-9]+"' | grep -oE '[0-9]+' | sort -n | head -1)
-bindsym $mod+alt+shift+Up exec swaymsg move container to workspace $(swaymsg -t get_workspaces -r | grep -oE '"name"\s*:\s*"[0-9]+"' | grep -oE '[0-9]+' | sort -n | tail -1)
-
+bindsym $mod+alt+shift+Down exec swaymsg move container to workspace $(swaymsg -t get_workspaces -r | jq -r '.[].num' | sort -n | head -1)
+bindsym $mod+alt+shift+Up exec swaymsg move container to workspace $(swaymsg -t get_workspaces -r | jq -r '.[].num' | sort -n | tail -1)
 # Fullscreen
 bindsym --to-code $mod+f fullscreen
 
@@ -172,7 +171,7 @@ bindsym alt+Print exec swaymsg -t get_tree | jq -r '.. | select(.focused?) | .re
 bindsym --to-code $mod+l exec swaylock --color 000000 --ring-color ffffff --key-hl-color 000000 --ring-ver-color ffffff --inside-ver-color 000000 --inside-wrong-color 000000 --ring-wrong-color ff0000
 
 # Clipboard manager
-bindsym --to-code $mod+v exec cliphist list | fuzzel -d -i --minimal-lines | cliphist decode | wl-copy
+bindsym --to-code $mod+v exec cliphist list | fuzzel -d -I --minimal-lines | cliphist decode | wl-copy
 bindsym --to-code $mod+Shift+v exec cliphist wipe
 
 
@@ -191,7 +190,7 @@ exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec wl-clip-persist --clipboard regular
 
 # Autotiling
-exec autotiling -l 2
+exec swaytiles
 
 # Cliphist
 exec cliphist wipe
@@ -237,11 +236,11 @@ bar {
 assign [app_id="AmneziaVPN"] workspace number 10
 assign [app_id="qbittorrent"] workspace number 9
 for_window [title="Steam" shell="xwayland"] move to workspace 6
-for_window [class="steam"] move to workspace 6
+for_window [class="(?i)steam"] move to workspace 6
 for_window [app_id="floating_term"] floating enable
 for_window [app_id="slterm"] floating enable
 for_window [app_id="slterm"] move position 0 -10000
 
 
-exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway XDG_SESSION_TYPE=wayland XDG_SESSION_DESKTOP=sway DISPLAY
 include ~/.config/sway/*.conf
