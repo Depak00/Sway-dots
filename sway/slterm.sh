@@ -16,5 +16,5 @@ swaymsg -t subscribe -m '["window"]' \
         swaymsg "[con_id=$id]" move position "$X" px "$Y" px
     done &
 
-# sleep 0.1
-exec kitty -1 --class slterm
+sleep 0.1
+exec kitty --class slterm

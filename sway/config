@@ -57,7 +57,7 @@ bindsym --to-code $mod+g exec steam
 bindsym --to-code $mod+shift+g exec ~/.local/bin/games
 
 # Start your launcher
-bindsym --to-code $mod+d exec "killall -q $menu_kill; exec $menu"
+bindsym --to-code $mod+d exec "killall -q $menu_kill || exec $menu"
 
 # Browser
 bindsym --to-code $mod+w exec $browser
@@ -127,6 +127,7 @@ bindsym $mod+alt+Up exec swaymsg workspace $(swaymsg -t get_workspaces -r | jq -
 # Move focused container to first/last workspace
 bindsym $mod+alt+shift+Down exec swaymsg move container to workspace $(swaymsg -t get_workspaces -r | jq -r '.[].num' | sort -n | head -1)
 bindsym $mod+alt+shift+Up exec swaymsg move container to workspace $(swaymsg -t get_workspaces -r | jq -r '.[].num' | sort -n | tail -1)
+
 # Fullscreen
 bindsym --to-code $mod+f fullscreen
 
@@ -211,10 +212,10 @@ hide_edge_borders smart
 default_floating_border pixel 1
 
 # colors
-client.focused #ffffff #ffffff #ffffff #ffffff
+client.focused #ffffff #ffffff #000000 #ffffff #ffffff
 
 # wallpaper
-output * bg ~/.config/sway/wp.png fill
+output * bg ~/Pictures/wallpapers/wp.png fill
 
 # Mouse focus
 focus_follows_mouse no
