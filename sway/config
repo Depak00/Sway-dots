@@ -12,11 +12,18 @@ set $menu_kill fuzzel
 
 # Browser
 set $browser firefox
-set $private --private-window
+set $browser_alt firefox --private-window
 
 # File managers
 set $files nemo
 set $tfiles yazi
+
+# Bluetooth, network
+set $bluetooth blueberry
+set $network nmrs
+
+# Notes
+set $notes simple-notes-desktop
 
 
 
@@ -40,3 +47,5 @@ include ~/.config/sway/config.d/autostart.conf
 include ~/.config/sway/config.d/bindings.conf
 include ~/.config/sway/config.d/decoration.conf
 include ~/.config/sway/config.d/rules.conf
+include ~/.config/sway/config.d/monitors.conf
+include ~/.config/sway/config.d/fx.conf

@@ -1,10 +1,10 @@
-font=Iosevka Term Extended 12
+font=Roboto 12
 width=380
 height=180
 margin=10
 padding=12
 border-size=2
-border-radius=6
+border-radius=10
 icons=1
 max-icon-size=48
 markup=1
@@ -15,23 +15,23 @@ layer=overlay
 anchor=top-right
 sort=-time
 
-background-color=#1F1F1F
-text-color=#FFFFFF
-border-color=#FB8C00
-progress-color=over #FB8C00
+background-color=#1e1e2e
+text-color=#cdd6f4
+border-color=#b4befe
+progress-color=over #b4befe
 
 [urgency=low]
-background-color=#1F1F1F
-text-color=#B3B3B3
-border-color=#FB8C00
+background-color=#1e1e2e
+text-color=#a6adc8
+border-color=#6c7086
 
 [urgency=normal]
-background-color=#1F1F1F
-text-color=#FFFFFF
-border-color=#FB8C00
+background-color=#1e1e2e
+text-color=#cdd6f4
+border-color=#b4befe
 
 [urgency=critical]
-background-color=#1F1F1F
-text-color=#FFFFFF
-border-color=#F28B82
+background-color=#1e1e2e
+text-color=#f38ba8
+border-color=#f38ba8
 default-timeout=0

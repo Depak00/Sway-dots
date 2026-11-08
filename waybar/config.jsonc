@@ -1,5 +1,5 @@
 {
-    "height": 30,
+    "height": 34,
     "spacing": 0,
 
     "modules-left": [
@@ -12,6 +12,7 @@
         "clock"
     ],
     "modules-right": [
+		"custom/updates",
         "backlight",
         "pulseaudio",
         "network",
@@ -58,6 +59,7 @@
     },
 
     "battery": {
+    	"bat": "BAT1",
         "states": {
             "warning": 30,
             "critical": 15
@@ -94,6 +96,7 @@
             "default": ["", "", ""]
         },
         "on-click": "pavucontrol",
+		"on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
         "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
         "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
     },
@@ -112,6 +115,15 @@
     "custom/power": {
         "format": "⏻",    
         "on-click": "~/.config/waybar/power_menu.sh",
-        "tooltip": false
-    }
+        "tooltip": false,
+        "align": 0.423
+    },
+    
+	"custom/updates": {
+	    "exec": "(checkupdates && yay -Qua) | wc -l",
+	    "interval": 360,
+	    "format": "  {}",
+	    "on-click": "kitty --class floating_term -e yay",
+	    "tooltip": false
+	}
 }
